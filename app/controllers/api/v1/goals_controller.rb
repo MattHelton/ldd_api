@@ -1,45 +1,41 @@
 module Api
     module V1
       class GoalsController < ApplicationController
+        before_action :set_goal, only: [:show, :update, :destroy]
+
+        # GET /goals
         def index
-          goals = Goal.order(created_at: :desc)
-          render json: { status: 'SUCCESS', message: 'loaded goals', data: goals }
-        end
-  
-        def show
-          goal = Goal.find(params[:id])
-          render json: { status: 'SUCCESS', message: 'loaded the goal', data: goal }
-        end
-  
-        def create
-          goal = Goal.new(goal_params)
-          if goal.save
-            render json: { status: 'SUCCESS', message: 'loaded the goal', data: goal }
-          else
-            render json: { status: 'ERROR', message: 'goal not saved', data: goal.errors }
-          end
-        end
-  
-        def destroy
-          goal = Goal.find(params[:id])
-          goal.destroy
-          render json: { status: 'SUCCESS', message: 'deleted the goal', data: goal }
-        end
-  
-        def update
-          goal = Goal.find(params[:id])
-          if goal.update(goal_params)
-            render json: { status: 'SUCCESS', message: 'updated the goal', data: goal }
-          else
-            render json: { status: 'SUCCESS', message: 'loaded the goal', data: goal }
-          end
-        end
-
-        private
-
-        def goal_params
-          params.require(:goal).permit(:title)
-        end
+          @goals = Goal.all
+          json_response(@goals)
+      end
+    
+      # POST /goals
+      def CreateGoals
+        @goal = Goal.create!(goal_params)
+        json_response(@goal, created)
+      end
+    
+      # GET /goals/:id
+      def show
+        json_response(@goal)
+      end
+    
+      # DELETE /goals/:id
+      def destroy
+        @goals.destroy
+        head :no_content
+      end
+    
+      private
+    
+      def goal_params
+          # whitelist params
+          params.permit(:name)
+      end
+    
+      def set_goal
+        @goal = Goal.find(params[:id])
+      end
       end
     end
   end        

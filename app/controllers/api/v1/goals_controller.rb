@@ -10,9 +10,9 @@ module Api
       end
     
       # POST /goals
-      def CreateGoals
-        @goal = Goal.create!(goal_params)
-        json_response(@goal, created)
+      def create
+        @goal = Goal.create(goal_params)
+        json_response(@goal)
       end
     
       # GET /goals/:id
@@ -30,7 +30,7 @@ module Api
     
       def goal_params
           # whitelist params
-          params.permit(:name)
+          params.permit(:title)
       end
     
       def set_goal

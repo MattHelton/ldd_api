@@ -10,8 +10,8 @@ module Api
         end
       
         # POST /activities
-        def CreateActivities
-          @activity = Activity.create!(activity_params)
+        def create
+          @activity = Activity.create(activity_params)
           json_response(@activity, created)
         end
       

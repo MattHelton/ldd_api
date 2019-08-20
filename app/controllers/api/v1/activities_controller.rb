@@ -12,7 +12,7 @@ module Api
         # POST /activities
         def create
           @activity = Activity.create(activity_params)
-          json_response(@activity, created)
+          json_response(@activity)
         end
       
         # GET /activities/:id
@@ -30,7 +30,7 @@ module Api
       
         def activity_params
             # whitelist params
-            params.permit(:name)
+            params.permit(:item)
         end
       
         def set_activity

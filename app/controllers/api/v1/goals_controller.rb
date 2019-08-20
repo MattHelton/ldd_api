@@ -30,7 +30,7 @@ module Api
     
       def goal_params
           # whitelist params
-          params.permit(:title)
+          params.permit(:item)
       end
     
       def set_goal
